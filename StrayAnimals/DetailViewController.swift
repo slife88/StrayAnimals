@@ -11,6 +11,7 @@ import UIKit
 class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailResettlementLabel: UILabel!
+    @IBOutlet weak var detailImageView: UIImageView!
 
 
     override func viewDidLoad() {
@@ -33,10 +34,24 @@ class DetailViewController: UIViewController {
     
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = selectedAnimal["Name"] as? String {
-            if let label = detailDescriptionLabel {
-                label.text = detail
-            }
+        if let resettlement = selectedAnimal["Resettlement"] as? String {
+            self.detailResettlementLabel.text? = resettlement
+        }
+        // Download and Show image
+        let imageUrl = selectedAnimal["ImageName"] as? String
+        if let url = URL(string: imageUrl!) {
+            let urlSession = URLSession(configuration: .default)
+            let task = urlSession.dataTask(with: url, completionHandler: {
+                (data: Data?, response: URLResponse?, error: Error?) in
+                if error != nil {
+                    print("session.dataTask 資料錯誤: \(error!.localizedDescription)")
+                    return
+                }
+                if let downloadedData = data {
+                    self.detailImageView.image = UIImage(data: downloadedData)
+                }
+            })
+            task.resume()
         }
     }
 }
