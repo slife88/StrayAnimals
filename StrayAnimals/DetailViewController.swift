@@ -35,8 +35,10 @@ class DetailViewController: UIViewController {
     func configureView() {
         // Update the user interface for the detail item.
         let resettlement = selectedAnimal["Resettlement"] as? String
-        self.detailResettlementLabel?.text = resettlement
-        
+        DispatchQueue.main.async {
+            self.detailResettlementLabel?.text = resettlement
+        }
+                
         // Download and Show image
         let imageName = selectedAnimal["ImageName"] as? String
         let imageUrl = URL(string: imageName!)
@@ -49,7 +51,10 @@ class DetailViewController: UIViewController {
                     return
                 }
                 if let downloadedData = data {
-                    self.detailImageView.image = UIImage(data: downloadedData)
+                    let downloadedImage = UIImage(data: downloadedData)
+                    DispatchQueue.main.async {
+                        self.detailImageView.image = downloadedImage
+                    }
                 }
             })
             task.resume()
