@@ -10,17 +10,8 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
+    @IBOutlet weak var detailResettlementLabel: UILabel!
 
-
-    func configureView() {
-        // Update the user interface for the detail item.
-        if let detail = detailItem {
-            if let label = detailDescriptionLabel {
-                label.text = detail.description
-            }
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,13 +24,20 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    var detailItem: NSDate? {
+    var selectedAnimal = [String: Any]() {
         didSet {
             // Update the view.
             configureView()
         }
     }
-
-
+    
+    func configureView() {
+        // Update the user interface for the detail item.
+        if let detail = selectedAnimal["Name"] as? String {
+            if let label = detailDescriptionLabel {
+                label.text = detail
+            }
+        }
+    }
 }
 

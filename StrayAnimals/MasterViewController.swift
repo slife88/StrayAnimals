@@ -12,13 +12,44 @@ class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
     var objects = [Any]()
-
+    var animalArray = [[String: Any]]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        navigationItem.leftBarButtonItem = editButtonItem
 
+        
+        
+        let webUrl = URL(string: "http://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=f4a75ba9-7721-4363-884d-c3820b0b917c")
+        if let url = webUrl {
+            let urlSession = URLSession(configuration: .default)
+            let task = urlSession.dataTask(with: url, completionHandler: {
+                (data: Data?, url: URLResponse?, error: Error?) in
+                if error != nil {
+                    print("session.dataTask 資料錯誤: \(error!.localizedDescription)")
+                    return
+                }
+                if let downloadedData = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: downloadedData, options: [])
+                        if let jsonDict = json as? [String: Any] {
+                            if let resultDict = jsonDict["result"] as? [String: Any] {
+                                if let resultsArray = resultDict["results"] as? [[String: Any]] {
+                                    self.animalArray = resultsArray
+                                    self.tableView.reloadData()
+                                }
+                            }
+                        }
+                        
+                    } catch {
+                        print("downloadedData: 資料錯誤")
+                    }
+                }
+            })
+            task.resume()
+        }
+        
+        navigationItem.leftBarButtonItem = editButtonItem
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
         navigationItem.rightBarButtonItem = addButton
         if let split = splitViewController {
@@ -48,9 +79,14 @@ class MasterViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row] as! NSDate
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
+                controller.selectedAnimal = animalArray[indexPath.row]
+                if animalArray[indexPath.row]["Name"] as! String? == "" || animalArray[indexPath.row]["Name"] == nil {
+                    controller.navigationItem.title = "幫我取個萌萌的名字吧"
+                } else {
+                    controller.navigationItem.title = animalArray[indexPath.row]["Name"] as? String
+                }
+                
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -64,14 +100,14 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return objects.count
+        return animalArray.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
-        let object = objects[indexPath.row] as! NSDate
-        cell.textLabel!.text = object.description
+        let animalName = animalArray[indexPath.row]["Name"] as! String?
+        cell.textLabel?.text = animalName!
         return cell
     }
 
