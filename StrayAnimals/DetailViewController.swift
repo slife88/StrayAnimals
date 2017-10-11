@@ -12,6 +12,7 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailResettlementLabel: UILabel!
     @IBOutlet weak var detailImageView: UIImageView!
+    @IBOutlet weak var detailNoteTextView: UITextView!
 
 
     override func viewDidLoad() {
@@ -35,10 +36,12 @@ class DetailViewController: UIViewController {
     func configureView() {
         // Update the user interface for the detail item.
         let resettlement = selectedAnimal["Resettlement"] as? String
+        let note = selectedAnimal["Note"] as? String
         DispatchQueue.main.async {
-            self.detailResettlementLabel?.text = resettlement
+            self.detailResettlementLabel.text = resettlement
+            self.detailNoteTextView.text = note
         }
-                
+        
         // Download and Show image
         let imageName = selectedAnimal["ImageName"] as? String
         let imageUrl = URL(string: imageName!)

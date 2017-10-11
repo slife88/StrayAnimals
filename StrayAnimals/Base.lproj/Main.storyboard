@@ -51,14 +51,28 @@
                                     <constraint firstAttribute="width" constant="280" id="SPP-YR-QSh"/>
                                     <constraint firstAttribute="height" constant="17" id="cey-LN-2Jt"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" size="system"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="12"/>
+                                <color key="textColor" red="0.024203729218734926" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="detail Note TextView" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Xcw-Ka-U2L">
+                                <rect key="frame" x="16" y="319" width="343" height="119"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="119" id="MS0-O5-Aho"/>
+                                    <constraint firstAttribute="width" constant="343" id="anl-pP-3yt"/>
+                                </constraints>
+                                <color key="textColor" red="1" green="0.50131284266844833" blue="0.0012486093737953396" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="Xcw-Ka-U2L" secondAttribute="bottom" constant="229" id="Mni-Qk-rFr"/>
                             <constraint firstItem="jXi-Wo-g0F" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" constant="16" id="Oml-d2-OUd"/>
+                            <constraint firstAttribute="trailing" secondItem="Xcw-Ka-U2L" secondAttribute="trailing" constant="16" id="Q4l-Pb-CI3"/>
+                            <constraint firstItem="Xcw-Ka-U2L" firstAttribute="leading" secondItem="svH-Pt-448" secondAttribute="leading" constant="16" id="R5A-LV-xby"/>
                             <constraint firstItem="jXi-Wo-g0F" firstAttribute="top" secondItem="SYR-Wa-9uf" secondAttribute="bottom" id="loz-At-yhf"/>
                             <constraint firstAttribute="trailing" secondItem="jXi-Wo-g0F" secondAttribute="trailing" constant="16" id="qJU-qJ-C0d"/>
                             <constraint firstItem="GAO-Cl-Wes" firstAttribute="top" secondItem="0XM-y9-sOw" secondAttribute="bottom" constant="356" id="szs-B6-8Pa"/>
@@ -69,6 +83,7 @@
                     <navigationItem key="navigationItem" title="Detail" id="mOI-FS-AaM"/>
                     <connections>
                         <outlet property="detailImageView" destination="jXi-Wo-g0F" id="eqi-Bc-gTt"/>
+                        <outlet property="detailNoteTextView" destination="Xcw-Ka-U2L" id="sxW-yL-yGF"/>
                         <outlet property="detailResettlementLabel" destination="0XM-y9-sOw" id="yWY-6D-FBy"/>
                     </connections>
                 </viewController>
@@ -127,7 +142,7 @@
                             <outlet property="delegate" destination="7bK-jq-Zjz" id="RA6-mI-bju"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Master" id="Zdf-7t-Un8"/>
+                    <navigationItem key="navigationItem" title="認養代替購買" id="Zdf-7t-Un8"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rux-fX-hf1" sceneMemberID="firstResponder"/>
             </objects>
