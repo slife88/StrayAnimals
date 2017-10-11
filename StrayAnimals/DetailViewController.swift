@@ -34,12 +34,13 @@ class DetailViewController: UIViewController {
     
     func configureView() {
         // Update the user interface for the detail item.
-        if let resettlement = selectedAnimal["Resettlement"] as? String {
-            self.detailResettlementLabel.text? = resettlement
-        }
+        let resettlement = selectedAnimal["Resettlement"] as? String
+        self.detailResettlementLabel?.text = resettlement
+        
         // Download and Show image
-        let imageUrl = selectedAnimal["ImageName"] as? String
-        if let url = URL(string: imageUrl!) {
+        let imageName = selectedAnimal["ImageName"] as? String
+        let imageUrl = URL(string: imageName!)
+        if let url = imageUrl {
             let urlSession = URLSession(configuration: .default)
             let task = urlSession.dataTask(with: url, completionHandler: {
                 (data: Data?, response: URLResponse?, error: Error?) in
